@@ -7,12 +7,11 @@
  * @author 	   Nochex 
  **/
 
-class NochexLTD_Nochex_Model_Nochex extends Mage_Payment_Model_Method_Abstract
-{
+class NochexLTD_Nochex_Model_Nochex extends Mage_Payment_Model_Method_Abstract {
 
-	protected $_isGateway = true;
+    protected $_isGateway = true;
     protected $_canAuthorize = false;
-	protected $_canUseCheckout = true;
+    protected $_canUseCheckout = true;
     protected $_canCapture = false;
     protected $_canCapturePartial = false;
     protected $_canRefund = false;
@@ -21,9 +20,9 @@ class NochexLTD_Nochex_Model_Nochex extends Mage_Payment_Model_Method_Abstract
     protected $_canUseForMultishipping = false;
     protected $_canSaveCc = false;
 
-	protected $_code = 'nochex';
-	protected $_infoBlockType = 'NochexLTD_Nochex_Block_Info';
-	protected $_formBlocktype = 'NochexLTD_Nochex_Block_Form';
+    protected $_code = 'nochex';
+    protected $_infoBlockType = 'NochexLTD_Nochex_Block_Info';
+    protected $_formBlocktype = 'NochexLTD_Nochex_Block_Form';
 
 
 	public function authorize(Varien_Object $payment, $amount)
@@ -202,6 +201,7 @@ class NochexLTD_Nochex_Model_Nochex extends Mage_Payment_Model_Method_Abstract
 		if (strlen($shippingaddress->getStreet(2)) != 0) {
 			$shipadd .= ", " . $shippingaddress->getStreet(2);
 			}
+		 
 		// Variable for storing the billing address details.
 		$billadd = "";
 		// Concatanation for adding the shipping address together which is stored in one variable.
@@ -233,25 +233,25 @@ class NochexLTD_Nochex_Model_Nochex extends Mage_Payment_Model_Method_Abstract
 			$amountFields = 'Order Details: - Amount: ' . $totalAmount . '. Postage: ' . $postage . ". Postage Field On (1) / Off (0) - " . $this->getConfigData("postageAmount");
 			$this->writeDebug($amountFields);
 				
-				
         $checkoutparams = array(
-            'merchant_id' 		=> $this->getConfigData("merchant_id"),
-            'success_url' 		=> Mage::getUrl('checkout/onepage/success'),
-            'cancel_url' 		=> Mage::getUrl('nochex/nochex/cancel'),
-            'callback_url' 		=> Mage::getUrl('nochex/nochex/apc'),
-            'order_id' 			=> $this->getCheckout()->getLastRealOrderId(),
-            'billing_fullname' 	=> $billingaddress->getFirstname() . " " . $billingaddress->getLastname(),
-            'customer_phone_number' => $billingaddress->getTelephone(),
-            'email_address'		=> $order->getCustomerEmail(),
-            'billing_address' 	=> $billadd,
+                        'merchant_id' 		=> $this->getConfigData("merchant_id"),
+                        'success_url' 		=> Mage::getUrl('checkout/onepage/success'),
+                        'cancel_url' 		=> Mage::getUrl('nochex/nochex/cancel'),
+                        'callback_url' 		=> Mage::getUrl('nochex/nochex/apc'),
+                        'order_id' 		=> $this->getCheckout()->getLastRealOrderId(),
+                        'billing_fullname' 	=> $billingaddress->getFirstname() . " " . $billingaddress->getLastname(),
+                        'customer_phone_number' => $billingaddress->getTelephone(),
+                        'email_address'		=> $order->getCustomerEmail(),
+                        'billing_address' 	=> $billadd,
 			'billing_city' 		=> $billingaddress->getCity(),
-            'billing_postcode' 	=> $billingaddress->getPostcode(),
+                        'billing_postcode' 	=> $billingaddress->getPostcode(),
+			'billing_country' 	=> $billingaddress->getCountry(),
 			'delivery_fullname' => $shippingaddress->getFirstname() . " " . $shippingaddress->getLastname(),	
 			'delivery_address' 	=> $shipadd,
 			'delivery_city' 	=> $shippingaddress->getCity(),
 			'delivery_postcode' => $shippingaddress->getPostcode(),
-			'amount' 			=> $totalAmount,
-			'postage' 			=> $postage,
+			'amount' 		=> $totalAmount,
+			'postage' 		=> $postage,
 			'description' 		=> $description,			
 			'xml_item_collection' => $xmlData,			
 			'optional_1' => $this->getConfigData("nochexDebug"),			
