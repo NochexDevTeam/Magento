@@ -167,7 +167,7 @@ class NochexLTD_Nochex_Model_Nochex extends Mage_Payment_Model_Method_Abstract {
 		 
 		 foreach ($order->getAllVisibleItems() as $item) {
 		 
-			$xmlData .= "<item><id>".$item->getId()."</id><name>".$item->getName()."</name><description>". $item->getName() ."". $item->getDescription()."</description><quantity>".number_format($item->getQtyOrdered(),0)."</quantity><price>".money_format('%.2n', $item->getPrice())."</price></item>";
+			$xmlData .= "<item><id>".$item->getId()."</id><name>".$item->getName()."</name><description>". $item->getName() ."". $item->getDescription()."</description><quantity>".number_format($item->getQtyOrdered(),0)."</quantity><price>".number_format($item->getPrice(),2)."</price></item>";
 		 
 		 }
 		 
@@ -182,7 +182,7 @@ class NochexLTD_Nochex_Model_Nochex extends Mage_Payment_Model_Method_Abstract {
 		
 		// Loops through all the information in the order, and stores the description to a related item.
 		foreach ($order->getAllVisibleItems() as $item) {
-			$description .= " ". $item->getId() . ".  ". $item->getName() . ".  ". number_format($item->getQtyOrdered(),0) . ". ". money_format('%.2n', $item->getPrice()) . ".  " . $item->getDescription() . ".  ";
+			$description .= " ". $item->getId() . ".  ". $item->getName() . ".  ". number_format($item->getQtyOrdered(),0) . ". ". number_format($item->getPrice(),2) . ".  " . $item->getDescription() . ".  ";
 		}
 		
 		}
